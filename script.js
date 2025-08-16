@@ -1,75 +1,89 @@
-const caixaPrincipal = document.querySelector(".caixa-principal");
-const caixaPerguntas = document.querySelector(".caixa-perguntas");
-const caixaAlternativas = document.querySelector(".caixa-alternativas");
-const caixaResultado = document.querySelector(".caixa-resultado");
-const textoResultado = document.querySelector(".texto-resultado");
-
-const perguntas = [
-    {
-        enunciado: "Assim que saiu da escola você se depara com uma nova tecnologia, um chat que consegue responder todas as dúvidas que uma pessoa pode ter, ele também gera imagens e áudios hiper-realistas. Qual o primeiro pensamento?",
-        alternativas: [
-            {
-                texto: "Isso é assustador!",
-                afirmacao: "No início ficou com medo do que essa tecnologia pode fazer. "
-            },
-            {
-                texto: "Isso é maravilhoso!",
-                afirmacao: "Quis saber como usar IA no seu dia a dia."
-            }
-        ]
-    },
-    {
-        enunciado: "Com a descoberta desta tecnologia, chamada Inteligência Artificial, uma professora de tecnologia da escola decidiu fazer uma sequência de aulas sobre esta tecnologia. No fim de uma aula ela pede que você escreva um trabalho sobre o uso de IA em sala de aula. Qual atitude você toma?",
-        alternativas: [
-            {
-                texto: "Utiliza uma ferramenta de busca na internet que utiliza IA para que ela ajude a encontrar informações relevantes para o trabalho e explique numa linguagem que facilite o entendimento.",
-                afirmacao: "Conseguiu utilizar a IA para buscar informações úteis."
-            },
-            {
-                texto: "Escreve o trabalho com base nas conversas que teve com colegas, algumas pesquisas na internet e conhecimentos próprios sobre o tema.",
-                afirmacao: "Sentiu mais facilidade em utilizar seus próprios recursos para escrever seu trabalho."
-            }
-        ]
-    },
-    // (Outras perguntas aqui...)
-];
-
-let atual = 0;
-let perguntaAtual;
-let historiaFinal = "";
-
-function mostraPergunta() {
-    if (atual >= perguntas.length) {
-        mostraResultado();
-        return;
-    }
-    perguntaAtual = perguntas[atual];
-    caixaPerguntas.textContent = perguntaAtual.enunciado;
-    caixaAlternativas.textContent = "";
-    mostraAlternativas();
+/* Fundo escuro futurista */
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: radial-gradient(circle at top, #0f0f1a, #000);
+  color: #e0e0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
-function mostraAlternativas(){
-    for(const alternativa of perguntaAtual.alternativas) {
-        const botaoAlternativas = document.createElement("button");
-        botaoAlternativas.textContent = alternativa.texto;
-        botaoAlternativas.addEventListener("click", () => respostaSelecionada(alternativa));
-        caixaAlternativas.appendChild(botaoAlternativas);
-    }
+/* Container principal */
+.caixa-principal {
+  background: rgba(20, 20, 40, 0.9);
+  border: 2px solid #00f5ff;
+  border-radius: 15px;
+  padding: 30px;
+  max-width: 700px;
+  text-align: center;
+  box-shadow: 0px 0px 30px #00f5ff77;
+  animation: flutuar 3s infinite ease-in-out;
 }
 
-function respostaSelecionada(opcaoSelecionada) {
-    const afirmacoes = opcaoSelecionada.afirmacao;
-    historiaFinal += afirmacoes + " ";
-    atual++;
-    caixaAlternativas.innerHTML = ''; // Limpar alternativas anteriores
-    setTimeout(mostraPergunta, 300); // Delayed for smooth transition
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
 }
 
-function mostraResultado() {
-    caixaPerguntas.textContent = "Em 2049...";
-    textoResultado.textContent = historiaFinal;
-    caixaAlternativas.textContent = "";
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #00f5ff;
+  text-shadow: 0px 0px 15px #00f5ff;
 }
 
-mostraPergunta();
+/* Perguntas */
+.caixa-perguntas {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+
+/* Botões das alternativas */
+.caixa-alternativas button {
+  display: block;
+  width: 100%;
+  background: linear-gradient(90deg, #00f5ff, #7a00ff);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.caixa-alternativas button:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 0px 20px #00f5ff;
+}
+
+/* Resultado */
+.caixa-resultado {
+  display: none;
+  margin-top: 20px;
+}
+
+.caixa-resultado p {
+  font-size: 1.2rem;
+  color: #fff;
+  text-shadow: 0px 0px 10px #7a00ff;
+}
+
+.caixa-resultado button {
+  margin-top: 15px;
+  background: #7a00ff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.caixa-resultado button:hover {
+  background: #00f5ff;
+  color: black;
+}
